@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Flashcards{% endblock %}
+
+{% block content %}
+    <h2>Flashcards</h2>
+    <div id="flashcard-container">
+        {% for word in words %}
+            <div class="flashcard">
+                <div class="front">{{ word.english_word }}</div>
+                <div class="back">
+                    {{ word.translation }}
+                    {% if word.image %}
+                        <img src="{{ word.image.url }}" alt="{{ word.english_word }}">
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p>No words available for flashcards.</p>
+        {% endfor %}
+    </div>
+    <script>
+        document.querySelectorAll('.flashcard').forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('flipped');
+            });
+        });
+    </script>
+{% endblock %}
